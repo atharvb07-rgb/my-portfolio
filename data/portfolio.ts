@@ -88,3 +88,63 @@ export const achievementsData = [
         link: "#"
     }
 ];
+export const hobbiesData = [
+    {
+        id: 1,
+        title: "Coding",
+        icon: "💻",
+        description: "Building systems, solving problems, and turning ideas into reality.",
+        size: "large", // Spans 2 columns
+        image: "/hobby-coding.jpg" // Make sure to add an image later if you want!
+    },
+    {
+        id: 2,
+        title: "Chess",
+        icon: "♟️",
+        description: "Sharpening strategic thinking and foresight.",
+        size: "small", // Spans 1 column
+        image: "/hobby-chess.jpg"
+    },
+    {
+        id: 3,
+        title: "Gaming",
+        icon: "🎮",
+        description: "Competitive FPS and immersive story-driven worlds.",
+        size: "small",
+        image: "/hobby-gaming.jpg"
+    },
+    {
+        id: 4,
+        title: "Exploring",
+        icon: "🚀",
+        description: "Always hunting for new technologies, places, and experiences.",
+        size: "large",
+        image: "/hobby-explore.jpg"
+    }
+];
+
+export const socialWorkData = [
+    {
+        id: 1,
+        role: "Lead Volunteer",
+        org: "University Winter Camp",
+        date: "Winter 2025",
+        location: "Universal AI University",
+        impact: "Led 3 Consecutive Cohorts",
+        description: "Spearheaded student engagement and logistics for three back-to-back winter camps, managing diverse groups of visiting students.",
+        content: "I didn't just volunteer for one camp; I committed to three. As a Lead Volunteer, I was the bridge between the university and hundreds of visiting students. My responsibilities included managing crowd logistics, facilitating ice-breaking sessions, and resolving real-time conflicts. Handling three distinct cohorts required immense adaptability—what worked for one group didn't always work for the next. This experience sharpened my ability to lead under pressure and manage large teams effectively.",
+        images: ["/winter-camp1.jpg", "/winter-camp2.jpg"] // Replace with your actual photos
+    },
+    {
+        id: 2,
+        role: "Team Leader",
+        org: "Smart Project (LOLT Collab)",
+        date: "Jan 2026",
+        location: "Khandape Village",
+        impact: "Empowered Rural Students",
+        description: "Led a 4-day mission to rural villages to teach critical life skills, self-defense, and safety awareness.",
+        content: "4 Days. Village Visits. And a whole lot of energy. This was a collaborative mission between Universal AI University and the Light of Life Trust (LOLT). I led a team of 6 to Khandape village with a simple goal: teach life skills you don't find in textbooks. We focused on 'Safety Awareness' (Good Touch & Bad Touch) and 'Self Defense' basics. The transformation was visible—students started shy, but by the time we began defense drills, they were all in. It taught me that education isn't just about information; it's about connection.",
+        images: ["/smart-project1.jpg", "/smart-project2.jpg"] // Replace with your actual photos
+    }
+];
+

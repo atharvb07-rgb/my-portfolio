@@ -1,6 +1,6 @@
 "use client";
 import { motion, useMotionValue, useSpring, useTransform } from "framer-motion";
-import { Home, User, Code, Mail, ExternalLink, Trophy } from "lucide-react";
+import { Home, User, Code, Mail, ExternalLink, Trophy, Heart } from "lucide-react";
 import { useRef } from "react";
 
 // 1. INDIVIDUAL DOCK ICON COMPONENT
@@ -47,6 +47,7 @@ const Dock = () => {
                 <DockIcon mouseX={mouseX} icon={User} label="About" href="#about" />
                 <DockIcon mouseX={mouseX} icon={Code} label="Projects" href="#projects" />
                 <DockIcon mouseX={mouseX} icon={Trophy} label="Awards" href="#achievements" />
+                <DockIcon mouseX={mouseX} icon={Heart} label="Social" href="#social" />
                 <DockIcon mouseX={mouseX} icon={Mail} label="Contact" href="#contact" />
                 <div className="w-[1px] h-8 bg-white/10 mx-1" />
                 <DockIcon mouseX={mouseX} icon={ExternalLink} label="Resume" href="/resume.pdf" />

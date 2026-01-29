@@ -1,75 +1,86 @@
 "use client";
-import { Canvas, useFrame } from "@react-three/fiber";
-import { Environment, Float, ContactShadows, PerspectiveCamera, useGLTF } from "@react-three/drei";
-import { useRef } from "react";
-import * as THREE from "three";
-import { motion } from "framer-motion";
+import Spline from '@splinetool/react-spline';
+import { motion } from 'framer-motion';
+import { ArrowDown } from 'lucide-react';
 
-// --- THE REAL ROBOT COMPONENT ---
-const RoboticHead = ({ scale = 1 }) => {
-    const groupRef = useRef<THREE.Group>(null);
-
-    // 1. LOAD YOUR MODEL
-    // ⚠️ REPLACE 'robot.glb' WITH YOUR EXACT FILENAME INSIDE /public
-    // Example: if your file is public/myrobot.glb, write "/myrobot.glb"
-    const { scene } = useGLTF("/robot_head.glb");
-
-    useFrame((state) => {
-        if (!groupRef.current) return;
-
-        // Mouse Tracking Logic
-        const { x, y } = state.mouse;
-
-        // Smooth Look-at movement
-        // If the robot looks opposite to your mouse, remove the negative sign from '-y'
-        groupRef.current.rotation.x = THREE.MathUtils.lerp(groupRef.current.rotation.x, -y * 0.5, 0.2);
-        groupRef.current.rotation.y = THREE.MathUtils.lerp(groupRef.current.rotation.y, x * 0.5, 0.1);
-    });
-
+export default function Intro() {
     return (
-        <group ref={groupRef} scale={scale}>
-            {/* 2. RENDER THE MODEL */}
-            {/* If the model faces the wrong way initially, adjust rotation here. 
-          Example: rotation={[0, Math.PI, 0]} turns it 180 degrees. */}
-            <primitive object={scene} position={[0, 0.3, 0]} />
-        </group>
-    );
-};
+        <section id="home" className="relative h-screen w-full bg-zinc-950 overflow-hidden flex flex-col md:flex-row">
 
-// --- MAIN SCENE ---
-const Intro = () => {
-    return (
-        <section className="h-screen w-full bg-zinc-950 relative flex flex-col items-center justify-center overflow-hidden">
+            {/* 1. MAIN TEXT CONTENT (Left on Laptop, Hidden on Mobile to avoid clutter) */}
+            <div className="relative z-10 w-full md:w-1/2 h-1/2 md:h-full flex flex-col justify-center px-6 md:px-20 pt-20 md:pt-0 pointer-events-none">
+                <motion.div
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.8, delay: 0.2 }}
+                    className="hidden md:block" // Hidden on mobile because we have the new title above the robot
+                >
+                    {/* Status Badge */}
+                    <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-indigo-500/10 border border-indigo-500/20 text-indigo-400 text-xs font-medium uppercase tracking-widest mb-6 backdrop-blur-md">
+                        <span className="w-2 h-2 rounded-full bg-indigo-500 animate-pulse" />
+                        System Online
+                    </div>
 
-            <div className="absolute inset-0 z-0">
-                <Canvas>
-                    <PerspectiveCamera makeDefault position={[0, 0, 8]} />
+                    <h1 className="text-8xl font-black text-white leading-[0.9] tracking-tighter mb-6">
+                        ATHARV <br />
+                        <span className="text-zinc-600">BHOSALE.</span>
+                    </h1>
 
-                    {/* Lighting Setup - Adjusted to make GLB models look good */}
-                    <ambientLight intensity={1.5} />
-                    <spotLight position={[10, 10, 10]} angle={0.15} penumbra={1} intensity={1} />
-                    <pointLight position={[-10, -10, -10]} intensity={1} color="#4f46e5" />
-
-                    <Float speed={2} rotationIntensity={0.5} floatIntensity={0.5}>
-                        {/* Adjust scale here if the robot is too big or small */}
-                        <RoboticHead scale={2.5} />
-                    </Float>
-
-                    <Environment preset="city" />
-                    <ContactShadows position={[0, -3.5, 0]} opacity={0.6} scale={10} blur={2.5} far={4.5} />
-                </Canvas>
+                    <p className="text-xl text-zinc-400 max-w-md leading-relaxed">
+                        First-year B.Tech Student & Creative Developer. <br />
+                        Building the intersection of <span className="text-white font-bold">IoT, AI</span> and <span className="text-white font-bold">Design</span>.
+                    </p>
+                </motion.div>
             </div>
 
+            {/* 2. ROBOT 3D SCENE & NEW TITLE (Right on Laptop, Full Screen on Mobile) */}
+            <div className="absolute inset-0 md:relative md:inset-auto w-full md:w-1/2 h-full z-0">
+
+                {/* --- NEW TITLE OVERLAY --- */}
+                <div className="absolute top-[15%] md:top-[10%] left-0 w-full flex flex-col items-center justify-center z-20 pointer-events-none select-none mix-blend-difference">
+
+                    {/* "HOLLA!" - Huge Outline Text */}
+                    <motion.h1
+                        initial={{ opacity: 0, scale: 0.8 }}
+                        animate={{ opacity: 1, scale: 1 }}
+                        transition={{ duration: 1, delay: 0.5 }}
+                        className="text-[120px] md:text-[150px] font-black text-transparent leading-none"
+                        style={{ WebkitTextStroke: "2px rgba(255,255,255,0.3)" }} // Creates the hollow outline effect
+                    >
+                        HOLLA!
+                    </motion.h1>
+
+                    {/* "I AM ATHARV" - Bold Subtitle */}
+                    <motion.div
+                        initial={{ opacity: 0, y: 20 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ duration: 1, delay: 0.8 }}
+                        className="text-white font-bold text-xl md:text-3xl tracking-widest uppercase mt-[-20px] bg-zinc-950/50 backdrop-blur-sm px-4 py-1 rounded-full border border-white/10"
+                    >
+                        I am Atharv
+                    </motion.div>
+                </div>
+
+                {/* 3D Scene */}
+                <Spline
+                    className="w-full h-full scale-90 md:scale-100"
+                    scene="https://prod.spline.design/kZDDjO5HuC9GJUM2/scene.splinecode"
+                />
+            </div>
+
+            {/* Scroll Indicator */}
             <motion.div
-                initial={{ opacity: 0, y: 0 }}
-                animate={{ opacity: 1, y: 10 }}
-                transition={{ repeat: Infinity, duration: 1.5, repeatType: "reverse" }}
-                className="absolute bottom-10 z-10 text-zinc-500 text-sm tracking-widest uppercase pointer-events-none"
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ delay: 1, duration: 1 }}
+                className="absolute bottom-10 left-0 w-full md:w-auto md:left-20 flex justify-center md:justify-start items-center gap-3 text-zinc-500 text-xs font-mono z-20"
             >
-                Scroll to Begin
+                <span className="animate-bounce">
+                    <ArrowDown size={14} />
+                </span>
+                SCROLL TO INITIALIZE
             </motion.div>
+
         </section>
     );
-};
-
-export default Intro;
+}

@@ -1,20 +1,16 @@
 "use client";
-import dynamic from 'next/dynamic';
-import { motion } from 'framer-motion';
-import { ArrowDown } from 'lucide-react';
-import { useState } from 'react';
-
-const Spline = dynamic(() => import('@splinetool/react-spline'), {
-    ssr: false,
-});
+import { Canvas } from "@react-three/fiber";
+import { Environment, Float } from "@react-three/drei";
+import { motion } from "framer-motion";
+import { ArrowDown } from "lucide-react";
+import Robot from "./Robot"; // Import your new robot component
+import { Suspense } from "react";
 
 export default function Intro() {
-    const [isLoaded, setIsLoaded] = useState(false);
-
     return (
         <section id="home" className="relative h-screen w-full bg-zinc-950 overflow-hidden flex flex-col md:flex-row">
 
-            {/* 1. LAPTOP TEXT */}
+            {/* 1. TEXT CONTENT (Left Side) */}
             <div className="relative z-10 w-full md:w-1/2 h-1/2 md:h-full flex flex-col justify-center px-6 md:px-20 pt-20 md:pt-0 pointer-events-none">
                 <motion.div
                     initial={{ opacity: 0, y: 20 }}
@@ -37,10 +33,10 @@ export default function Intro() {
                 </motion.div>
             </div>
 
-            {/* 2. VISUAL AREA (Optimized) */}
+            {/* 2. 3D ROBOT SCENE (Right Side) */}
             <div className="absolute inset-0 md:relative md:inset-auto w-full md:w-1/2 h-full z-0 flex items-center justify-center bg-zinc-950">
 
-                {/* Mobile Fallback */}
+                {/* Mobile Fallback (Gradient) */}
                 <div className="absolute inset-0 bg-gradient-to-b from-indigo-500/10 to-transparent md:hidden pointer-events-none" />
 
                 {/* Title Overlay */}
@@ -64,14 +60,24 @@ export default function Intro() {
                     </motion.div>
                 </div>
 
-                {/* 3D Scene - PERFORMANCE BOOST APPLIED */}
-                {/* We added 'will-change-transform' and 'transform-gpu' to force hardware acceleration */}
-                <div className={`hidden md:block w-full h-full transition-opacity duration-1000 ease-in-out ${isLoaded ? 'opacity-100' : 'opacity-0'} will-change-transform transform-gpu`}>
-                    <Spline
-                        className="w-full h-full scale-100"
-                        scene="https://prod.spline.design/kZDDjO5HuC9GJUM2/scene.splinecode"
-                        onLoad={() => setIsLoaded(true)}
-                    />
+                {/* THE 3D CANVAS - Only active on laptop to save mobile battery/lag */}
+                <div className="hidden md:block w-full h-full cursor-grab active:cursor-grabbing">
+                    <Canvas camera={{ position: [0, 0, 5], fov: 45 }}>
+                        {/* Lights */}
+                        <ambientLight intensity={0.5} />
+                        <spotLight position={[10, 10, 10]} angle={0.15} penumbra={1} intensity={1} />
+                        <pointLight position={[-10, -10, -10]} intensity={1} color="indigo" />
+
+                        {/* Environment (Makes metal look shiny) */}
+                        <Environment preset="city" />
+
+                        <Suspense fallback={null}>
+                            {/* Float makes it hover gently */}
+                            <Float speed={2} rotationIntensity={0.5} floatIntensity={0.5}>
+                                <Robot />
+                            </Float>
+                        </Suspense>
+                    </Canvas>
                 </div>
             </div>
 

@@ -7,6 +7,7 @@ import SocialWork from "@/components/SocialWork";  // <--- New
 import Contact from "@/components/Contact";
 import Dock from "@/components/Dock";
 import Preloader from "@/components/Preloader";
+import { Analytics } from "@vercel/analytics/next"
 
 export default function Home() {
   return (
